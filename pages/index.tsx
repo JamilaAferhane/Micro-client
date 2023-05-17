@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 // import Head from "next/head";
 import { Button, Container, Typography } from "@mui/material";
 import Link from "next/link";
-import LoginModal from "../common/components/Login";
 // import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {

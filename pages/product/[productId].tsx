@@ -33,17 +33,40 @@ const ProductPage: FC<ProductPageProps> = ({ product }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Call an external API endpoint to get posts
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
-  const products: Product[] = await res.json();
+  try {
+    // Call an external API endpoint to get products
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch products");
+    }
 
-  // Get the paths we want to pre-render based on products
-  const paths = products.map((product) => ({
-    params: { productId: product._id },
-  }));
+    const products: Product[] = await res.json();
 
-  return { paths, fallback: false };
+    // Get the paths we want to pre-render based on products
+    const paths = products.map((product) => ({
+      params: { productId: product._id },
+    }));
+
+    return { paths, fallback: false };
+  } catch (error) {
+    // Handle the error gracefully, e.g., log the error or return a fallback value
+    console.error("Error in getStaticPaths:", error);
+    return { paths: [], fallback: false };
+  }
 };
+
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   // Call an external API endpoint to get posts
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+//   const products: Product[] = await res.json();
+
+//   // Get the paths we want to pre-render based on products
+//   const paths = products.map((product) => ({
+//     params: { productId: product._id },
+//   }));
+
+//   return { paths, fallback: false };
+// };
 
 export const getStaticProps: GetStaticProps = async ({
   params,
