@@ -35,7 +35,13 @@ const ProductPage: FC<ProductPageProps> = ({ product }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     // Call an external API endpoint to get products
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+    const res = await fetch(
+      `${
+        process.env.NODE_ENV === "production"
+          ? process.env.NEXT_PUBLIC_API_URL
+          : "http://localhost:5005/api"
+      }/products`
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch products");
     }
