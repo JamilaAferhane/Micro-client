@@ -73,7 +73,11 @@ export const getStaticProps: GetStaticProps = async ({
 }: GetStaticPropsContext) => {
   const productId = params?.productId;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`
+    `${
+      process.env.NODE_ENV === "production"
+        ? process.env.NEXT_PUBLIC_API_URL
+        : "http://localhost:5005/api"
+    }/products/${productId}`
   );
   const product: Product = await res.json();
 

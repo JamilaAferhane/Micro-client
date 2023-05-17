@@ -18,7 +18,13 @@ export default products;
 
 export const getStaticProps: GetStaticProps<ProductPageProps> = async () => {
   // Fetch products from an API or database
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+  const response = await fetch(
+    `${
+      process.env.NODE_ENV === "production"
+        ? process.env.NEXT_PUBLIC_API_URL
+        : "http://localhost:5005/api"
+    }/products`
+  );
   const products: Product[] = await response.json();
 
   return {
