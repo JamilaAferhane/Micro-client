@@ -4,6 +4,8 @@ import { CssBaseline } from "@mui/material";
 import { DefaultSeo } from "next-seo";
 import ThemeProvider from "../common/layouts/ThemeProvider";
 import defaultSeoInfo from "../common/config/default-seo-config";
+import StoreProvider from "../common/layouts/StoreProvider";
+import GlobalLayout from "../common/layouts/GlobalLayout/GlobalLayout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,7 +16,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       />
       <CssBaseline />
-      <Component {...pageProps} />
+      <StoreProvider>
+        <GlobalLayout>
+          <Component {...pageProps} />
+        </GlobalLayout>
+      </StoreProvider>
     </ThemeProvider>
   );
 }

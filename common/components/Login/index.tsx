@@ -1,70 +1,59 @@
-import React, { ChangeEvent, FC, useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { Modal } from "@mui/material";
+import React from "react";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
-type LoginProps = {
+interface LinkTabProps {
+  // eslint-disable-next-line react/require-default-props
+  label?: string;
+  // eslint-disable-next-line react/require-default-props
+  href?: string;
+}
+
+interface LoginTabsProps {
   open: boolean;
-  onClose: any;
-};
+  onClose: () => void;
+}
 
-const LoginModal: FC<LoginProps> = ({ open, onClose }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LinkTab = (props: LinkTabProps) => (
+  <Tab
+    component="a"
+    onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      event.preventDefault();
+    }}
+    {...props}
+  />
+);
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
-  };
+const LoginForm: React.FC<LoginTabsProps> = ({ open, onClose }) => {
+  const [value, setValue] = React.useState(0);
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const handleLogin = () => {
-    // Perform login logic with username and password
-    // You can replace this with your own implementation
-
-    console.log("Login with:", username, password);
-
-    // Close the modal
-    onClose();
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Login</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="Username"
-          type="text"
-          value={username}
-          onChange={handleUsernameChange}
-          fullWidth
-        />
-        <TextField
-          margin="dense"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          fullWidth
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleLogin} variant="contained" color="primary">
-          Login
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <Modal open={open} onClose={onClose}>
+      <Box>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="nav tabs example"
+        >
+          <LinkTab label="signIn" />
+          <LinkTab label="signUp" />
+        </Tabs>
+
+        {value === 0 ? (
+          <SignIn open={open} onClose={onClose} />
+        ) : (
+          <SignUp open={open} onClose={onClose} />
+        )}
+      </Box>
+    </Modal>
   );
 };
-
-export default LoginModal;
+export default LoginForm;

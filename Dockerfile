@@ -1,36 +1,37 @@
-# Étape de construction
-FROM node:16.20-bullseye-slim as builder
-
-ENV NEXT_PUBLIC_API_URL=http://localhost:5001/api
-
-# Définit le répertoire de travail
+# Base image
+FROM node:18-alpine AS builder
+ENV NODE_ENV=development
+ENV NEXT_PUBLIC_API_URL=http://gateway:5005/api
+# Set working directory
 WORKDIR /app
-
-# Copie le fichier package.json et package-lock.json pour installer les dépendances
-COPY package*.json ./
-
-# Installe les dépendances
-RUN npm ci --only=production && \
-    npm cache clean --force
-
-# Copie le reste du code source
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+# update npm 
+RUN npm install -g npm@9.6.6
+# Install dependencies
+RUN npm install
+# Copy the entire project
 COPY . .
-
-# Construit l'application pour la production
+# Build the Next.js project
 RUN npm run build
+# Remove development dependencies
+RUN npm prune --production
 
-
-# Étape de production
-FROM nginx:1.21.0-alpine as production
-
-# Copie les fichiers de build de l'étape de construction vers le serveur Nginx
-COPY --from=builder /app/build /usr/share/nginx/html
-
-# Copie la configuration personnalisée de Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose le port sur lequel écoute Nginx
-EXPOSE 80
-
-# Démarre le serveur Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Final image
+FROM node:18-alpine
+ENV NODE_ENV=production
+ENV NEXT_PUBLIC_API_URL=http://gateway:5005/api
+# Set working directory
+WORKDIR /app
+# update npm 
+RUN npm install -g npm@9.6.6
+# Copy build from the builder stage
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/package-lock.json ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+RUN npm install --only=production
+# Expose the desired port (replace 3000 with your Next.js port)
+EXPOSE 3000
+# Run the Next.js application
+CMD ["npm", "run", "start"]

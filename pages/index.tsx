@@ -1,37 +1,15 @@
-import type { NextPage } from "next";
-// import Head from "next/head";
-import { Button, Container, Typography } from "@mui/material";
-import Link from "next/link";
-// import styles from "../styles/Home.module.css";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
-  // Handle login logic
-  const handleLogin = () => {
-    // Handle login logic
-  };
+  const router = useRouter();
 
-  return (
-    <div>
-      <header>
-        <Typography variant="h4" gutterBottom>
-          Welcome to Our eCommerce App
-        </Typography>
-      </header>
+  useEffect(() => {
+    router.replace("/home");
+  }, []);
 
-      <Container component="main">
-        <Typography variant="h5" gutterBottom>
-          Explore our wide range of products!
-        </Typography>
-
-        <Button variant="contained" color="primary" onClick={handleLogin}>
-          Login
-        </Button>
-
-        <Link href="/product"> explore our products</Link>
-        {/* <LoginModal open onClose={() => {}} /> */}
-      </Container>
-    </div>
-  );
+  return null;
 };
 
 export default Home;

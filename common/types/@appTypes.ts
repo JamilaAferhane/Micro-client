@@ -10,3 +10,12 @@ export type Product = {
   image: string;
   price: number;
 };
+
+export interface UserType {
+  email: string;
+  fullname: string;
+  password?: string;
+  token?: string;
+  role?: string;
+  credit?: number;
+}

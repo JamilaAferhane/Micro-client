@@ -2,6 +2,7 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import { Button, Container } from "@mui/material";
 import { FC } from "react";
+import Link from "next/link";
 import { Product } from "../../common/types/@appTypes";
 import SuccessfulPayment from "../../common/components/payment/SuccessfulPayment";
 
@@ -26,7 +27,7 @@ const ProductPage: FC<ProductPageProps> = ({ product }) => {
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
 
-      <Button color="primary">Pay the order</Button>
+      <Link href="/payment">Pay the order</Link>
       <SuccessfulPayment state />
     </Container>
   );
