@@ -1,10 +1,14 @@
 export default {
-  default: "#616161",
-  dark_main: "#9E9E9E",
-  light_primary: "#F5F5F5",
-  text_primary_color: "#212121",
-  accent_color: "#607D8B",
-  primary_text_color: "#212121",
-  secondary_text_color: "#757575",
-  divider_color: "#BDBDBD",
+  primary: {
+    // main: '#083f8f',
+    main: "#222935",
+    // 'rgba(0,0,0,0.9)',
+    success: "green",
+  },
+  secondary: {
+    main: "#fff",
+  },
+};
+export const ButtonColors = {
+  buyProductButton: "#ffbf00",
 };

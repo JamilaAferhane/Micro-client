@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, MouseEvent, useState } from "react";
 import {
+  Box,
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -10,16 +10,14 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
-import { useRouter } from "next/router";
 import { loginUser } from "../../utils/authenticationActions";
 import { RootState, UserAction } from "../../../store/types";
 
 type LoginProps = {
-  open: boolean;
   onClose: any;
 };
 
-const SignIn: FC<LoginProps> = ({ open, onClose }) => {
+const SignIn: FC<LoginProps> = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch: ThunkDispatch<RootState, any, UserAction> = useDispatch();
@@ -28,7 +26,6 @@ const SignIn: FC<LoginProps> = ({ open, onClose }) => {
     (state: RootState) => state.user.authenticatedUser
   );
 
-  // const router = useRouter();
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -53,10 +50,11 @@ const SignIn: FC<LoginProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Login</DialogTitle>
+    <Box sx={{ color: "#fff" }}>
+      <DialogTitle>Sign In !</DialogTitle>
       <DialogContent>
         <TextField
+          sx={{ color: "#fff" }}
           autoFocus
           margin="dense"
           label="Username"
@@ -66,6 +64,7 @@ const SignIn: FC<LoginProps> = ({ open, onClose }) => {
           fullWidth
         />
         <TextField
+          sx={{ color: "#fff" }}
           margin="dense"
           label="Password"
           type="password"
@@ -79,13 +78,13 @@ const SignIn: FC<LoginProps> = ({ open, onClose }) => {
           </Typography>
         ) : null}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ color: "#fff" }}>
         <Button onClick={handleCancel}>Cancel</Button>
         <Button onClick={handleLogin} variant="contained" color="primary">
           Login
         </Button>
       </DialogActions>
-    </Dialog>
+    </Box>
   );
 };
 

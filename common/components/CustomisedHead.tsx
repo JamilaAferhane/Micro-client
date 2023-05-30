@@ -2,11 +2,10 @@
 import NextHead from "next/head";
 import { FC } from "react";
 
-const SERVER_URL = "http://localhost:4000";
 const defaultDescription = "learn next js framework";
 const defaultTitle = "next js + seo";
 
-const defaultOGImage = `${SERVER_URL}/images/`;
+const defaultOGImage = `${process.env.NEXT_PUBLIC_API_URL}/images/`;
 const defaultKeywords = "NextJS, react, seo";
 
 interface Props {

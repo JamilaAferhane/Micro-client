@@ -6,9 +6,14 @@ export type ChildrenProps = {
 export type Product = {
   _id: any;
   title: string;
-  description: String;
-  image: string;
+  description: string;
   price: number;
+  quantity?: number;
+  rating?: string;
+  image?: string[];
+  inStock?: boolean;
+  review?: string[];
+  categories: string;
 };
 
 export interface UserType {
@@ -17,5 +22,14 @@ export interface UserType {
   password?: string;
   token?: string;
   role?: string;
-  credit?: number;
+  credit: number;
 }
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export type Cart = {
+  cartItems: CartItem[];
+  shippingAddress?: Object;
+  paymentMethod?: string;
+};

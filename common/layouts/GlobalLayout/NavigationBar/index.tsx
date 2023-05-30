@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -68,6 +69,13 @@ export default function NavigationBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
+  const shoppingCart = useSelector(
+    (state: RootState) => state.products.shoppingCart
+  );
+
+  const authenticatedUser = useSelector(
+    (state: RootState) => state.user.authenticatedUser
+  );
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -105,8 +113,9 @@ export default function NavigationBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem href="/profil" onClick={handleMenuClose}>
+        Profil
+      </MenuItem>
     </Menu>
   );
 
@@ -169,7 +178,7 @@ export default function NavigationBar() {
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="secondary"
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
@@ -195,35 +204,34 @@ export default function NavigationBar() {
           </Search>
           {/* ---------------------- */}
           <Box sx={{ ml: 20 }}>
-            <Link href="/home">home</Link>
+            <Link href="/home">Home</Link>
           </Box>
           <Box sx={{ ml: 9 }}>
-            <Link href="/product">products</Link>
+            <Link href="/product">Products</Link>
           </Box>
           <Box sx={{ ml: 9 }}>
-            <Link href="/product">about</Link>
+            <Link href="/about">About us</Link>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Typography sx={{ display: "flex", alignItems: "center", pr: 5 }}>
+              {authenticatedUser ? authenticatedUser.email : null}
+            </Typography>
             <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
-                <ShoppingCart />
-              </Badge>
+              <Link href="/cart" passHref>
+                <a>
+                  <Badge badgeContent={shoppingCart.length} color="error">
+                    <ShoppingCart />
+                  </Badge>
+                </a>
+              </Link>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+
             {user ? (
               <IconButton
                 size="large"
@@ -231,14 +239,14 @@ export default function NavigationBar() {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
+                color="error"
+                href="/profil"
               >
                 <AccountCircle />
               </IconButton>
             ) : (
               <IconButton onClick={() => setLoginOpen(true)}>
-                <LoginOutlined />
+                <LoginOutlined sx={{ color: "#fff" }} />
               </IconButton>
             )}
             {loginOpen ? (

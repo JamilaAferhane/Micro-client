@@ -36,23 +36,36 @@ const LoginForm: React.FC<LoginTabsProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box>
+    <Modal
+      open={open}
+      onClose={onClose}
+      sx={{
+        color: "#fff",
+        backgroundColor: "#bbb",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="nav tabs example"
+          sx={{ color: "#fff" }}
         >
           <LinkTab label="signIn" />
           <LinkTab label="signUp" />
         </Tabs>
-
-        {value === 0 ? (
-          <SignIn open={open} onClose={onClose} />
-        ) : (
-          <SignUp open={open} onClose={onClose} />
-        )}
-      </Box>
+        <Box>
+          {value === 0 ? (
+            <SignIn onClose={onClose} />
+          ) : (
+            <SignUp onClose={onClose} />
+          )}
+        </Box>
+      </>
     </Modal>
   );
 };

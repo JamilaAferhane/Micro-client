@@ -34,20 +34,26 @@ export interface SetTokenAction {
 export type TokenActionTypes = SetTokenAction;
 
 export interface Product {
-  _id: string;
+  _id: any;
   title: string;
   description: string;
-  image: string;
   price: number;
+  quantity?: number;
+  rating?: string;
+  image?: string[];
+  inStock?: boolean;
+  review?: string[];
+  categories: string;
 }
 
 export interface ProductsState {
   products: Product[];
+  shoppingCart: Product[];
 }
 
 export interface SetProductsAction {
-  type: "SET_PRODUCTS";
-  payload: Product[];
+  type: "SET_PRODUCTS" | "ADD_TO_SHOPPING_CART" | "REMOVE_FROM_SHOPPING_CART";
+  payload: any;
 }
 
 export interface RootState {

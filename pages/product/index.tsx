@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { FC, useEffect } from "react";
 import { Container, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";

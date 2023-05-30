@@ -9,13 +9,15 @@ COPY package.json package-lock.json ./
 # update npm 
 RUN npm install -g npm@9.6.6
 # Install dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
+
 # Copy the entire project
 COPY . .
 # Build the Next.js project
+
 RUN npm run build
 # Remove development dependencies
-RUN npm prune --production
+# RUN npm prune --production
 
 # Final image
 FROM node:18-alpine
@@ -25,12 +27,14 @@ ENV NEXT_PUBLIC_API_URL=http://gateway:5005/api
 WORKDIR /app
 # update npm 
 RUN npm install -g npm@9.6.6
+
+
 # Copy build from the builder stage
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/package-lock.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-RUN npm install --only=production
+RUN npm install --only=production --legacy-peer-deps
 # Expose the desired port (replace 3000 with your Next.js port)
 EXPOSE 3000
 # Run the Next.js application
