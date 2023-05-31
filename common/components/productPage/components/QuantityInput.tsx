@@ -52,7 +52,7 @@ const QuantityInput: FC<PropTypes> = ({ product }) => {
     <Paper
       sx={{
         p: 2,
-        width: 200,
+        width: 300,
         height: 190,
         border: "1px solid #ddd",
         zIndex: 0,
@@ -67,7 +67,7 @@ const QuantityInput: FC<PropTypes> = ({ product }) => {
         <Divider />
       </Typography>
       <ButtonGroup
-        sx={{ display: "block", mb: 1 }}
+        sx={{ display: "block", mb: 1, ml: 3 }}
         disabled={!isProductInStock}
       >
         <Button variant="contained" onClick={handleDecrement}>
@@ -112,8 +112,8 @@ const QuantityInput: FC<PropTypes> = ({ product }) => {
           variant="contained"
           onClick={handleBuyProduct}
         >
-          <NextLink href="/payment">
-            <a> Buy</a>
+          <NextLink href="/cart">
+            <a> Buy Now</a>
           </NextLink>
         </Button>
       </ButtonGroup>

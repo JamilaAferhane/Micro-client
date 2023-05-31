@@ -60,6 +60,7 @@ export interface RootState {
   user: UserState;
   token: TokenState;
   products: ProductsState;
+  order: any;
 }
 
 export type ProductActionTypes = SetProductsAction;
